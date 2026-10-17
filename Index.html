@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14532d">
+<title>Shankar Fireworks Billing</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f2f5f0;
+ color:#222;
+}
+header{
+ background:#14532d;
+ color:white;
+ text-align:center;
+ padding:22px 10px;
+ border-bottom:4px solid #d4af37;
+}
+header h1{margin:0;font-size:26px;letter-spacing:1px}
+header p{margin:7px 0 0;font-size:14px}
+.container{max-width:850px;margin:18px auto;padding:12px}
+.card{
+ background:white;
+ border:1px solid #e0e0e0;
+ border-radius:12px;
+ padding:16px;
+ margin-bottom:16px;
+ box-shadow:0 3px 10px #0000000a;
+}
+h2{font-size:19px;color:#14532d;margin-top:0}
+label{display:block;font-weight:bold;font-size:13px;margin:12px 0 6px}
+input{
+ width:100%;padding:12px;border:1px solid #ccc;
+ border-radius:7px;font-size:16px;background:white;
+}
+.row{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+button{
+ border:0;border-radius:7px;padding:12px 14px;
+ font-size:15px;font-weight:bold;cursor:pointer;
+}
+.primary{background:#14532d;color:white}
+.secondary{background:#e7eee8;color:#14532d}
+.danger{background:#fee2e2;color:#991b1b}
+button:active{opacity:.8}
+.item{
+ border:1px solid #ddd;border-radius:9px;
+ padding:12px;margin:12px 0;
+ background:#fff;
+}
+.item-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.item-head input{font-weight:bold}
+.amount{text-align:right;font-weight:bold;color:#14532d;margin-top:10px}
+.total{
+ background:#14532d;color:white;padding:18px;
+ border-radius:9px;display:flex;justify-content:space-between;
+ align-items:center;font-size:20px;font-weight:bold;
+}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.small{font-size:12px;color:#666;line-height:1.5}
+.bill-row{
+ padding:12px;border-bottom:1px solid #ddd;
+ display:flex;justify-content:space-between;gap:10px;align-items:center
+}
+footer{text-align:center;color:#666;font-size:12px;padding:20px}
+@media(max-width:420px){
+ header h1{font-size:22px}
+ .container{padding:8px}
+ .card{padding:12px}
+ .actions{grid-template-columns:1fr}
+}
+@media print{
+ body{background:white}
+ header{background:white!important;color:#14532d!important;border-bottom:2px solid #d4af37}
+ .no-print,footer{display:none!important}
+ .container{margin:0;padding:0}
+ .card{box-shadow:none;border:0;padding:5px}
+ input{border:0;padding:4px}
+ .item{break-inside:avoid}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>SHANKAR FIREWORKS</h1>
+ <p>Fireworks &amp; Crackers</p>
+ <p>Indore, Madhya Pradesh</p>
+</header>
+
+<div class="container">
+
+ <div class="card">
+  <h2>🧾 Naya Cash Memo</h2>
+
+  <label>Customer Name</label>
+  <input id="customer" type="text" placeholder="Customer ka naam likhein">
+
+  <label>Bill Date</label>
+  <input id="billDate" type="date">
+
+  <h2 style="margin-top:24px">Items</h2>
+  <div id="items"></div>
+
+  <button class="secondary no-print" onclick="addItem()" style="width:100%">
+   + Add Item
+  </button>
+
+  <div class="total" style="margin-top:18px">
+   <span>GRAND TOTAL</span>
+   <span id="grandTotal">₹0.00</span>
+  </div>
+
+  <div class="actions no-print">
+   <button class="primary" onclick="saveBill()">Save Bill</button>
+   <button class="secondary" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <p class="small">
+   Thank you for shopping with Shankar Fireworks!
+  </p>
+ </div>
+
+ <div class="card no-print">
+  <h2>📋 Saved Bills</h2>
+  <input id="billSearch" placeholder="Customer name se bill search karein"
+         oninput="showBills()">
+  <div id="history"></div>
+  <p class="small">
+   Filhaal bills isi browser mein save honge. Online database connection
+   agle step mein jodenge.
+  </p>
+ </div>
+
+</div>
+
+<footer>SHANKAR FIREWORKS · Indore</footer>
+
+<script>
+let itemCount = 0;
+
+function today(){
+ const d = new Date();
+ return d.getFullYear() + "-" +
+ String(d.getMonth()+1).padStart(2,"0") + "-" +
+ String(d.getDate()).padStart(2,"0");
+}
+
+document.getElementById("billDate").value = today();
+
+function addItem(name="",qty="",rate=""){
+ itemCount++;
+ const id = itemCount;
+ const div = document.createElement("div");
+ div.className = "item";
+ div.id = "item" + id;
+
+ div.innerHTML = `
+  <div class="item-head">
+   <strong>Item ${id}</strong>
+   <button type="button" class="danger no-print"
+    onclick="removeItem(${id})">Remove</button>
+  </div>
+  <label>Item Name</label>
+  <input class="iname" placeholder="Cracker ka naam"
+   value="${escapeAttr(name)}" oninput="calculate()">
+  <div class="row">
+   <div>
+    <label>Quantity</label>
+    <input class="qty" type="number" min="0" step="any"
+     placeholder="0" value="${qty}" oninput="calculate()">
+   </div>
+   <div>
+    <label>Rate (₹)</label>
+    <input class="rate" type="number" min="0" step="any"
+     placeholder="0" value="${rate}" oninput="calculate()">
+   </div>
+  </div>
+  <div class="amount">Amount: <span class="lineTotal">₹0.00</span></div>
+ `;
+ document.getElementById("items").appendChild(div);
+ calculate();
+}
+
+function escapeAttr(s){
+ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;")
+  .replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function removeItem(id){
+ document.getElementById("item"+id)?.remove();
+ calculate();
+}
+
+function money(n){
+ return "₹" + Number(n).toLocaleString("en-IN",{
+  minimumFractionDigits:2,maximumFractionDigits:2
+ });
+}
+
+function getItems(){
+ return [...document.querySelectorAll(".item")].map(el=>{
+  const name=el.querySelector(".iname").value.trim();
+  const qty=Number(el.querySelector(".qty").value)||0;
+  const rate=Number(el.querySelector(".rate").value)||0;
+  return {name,qty,rate,amount:qty*rate};
+ }).filter(x=>x.name && x.qty>0);
+}
+
+function calculate(){
+ let total=0;
+ document.querySelectorAll(".item").forEach(el=>{
+  const qty=Number(el.querySelector(".qty").value)||0;
+  const rate=Number(el.querySelector(".rate").value)||0;
+  const amount=qty*rate;
+  el.querySelector(".lineTotal").textContent=money(amount);
+  total+=amount;
+ });
+ document.getElementById("grandTotal").textContent=money(total);
+}
+
+function saveBill(){
+ const customer=document.getElementById("customer").value.trim();
+ const items=getItems();
+
+ if(!items.length){
+  alert("Pehle kam se kam ek item aur quantity bharein.");
+  return;
+ }
+
+ const bill={
+  id:Date.now().toString(),
+  customer:customer,
+  date:document.getElementById("billDate").value||today(),
+  items:items,
+  total:items.reduce((s,x)=>s+x.amount,0)
+ };
+
+ let bills=[];
+ try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
+ catch(e){bills=[]}
+
+ bills.unshift(bill);
+ localStorage.setItem("shankarBills",JSON.stringify(bills));
+ showBills();
+ alert("Bill is browser mein save ho gaya!");
+}
+
+function showBills(){
+ let bills=[];
+ try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
+ catch(e){bills=[]}
+
+ const q=document.getElementById("billSearch").value.toLowerCase();
+ const list=document.getElementById("history");
+ list.innerHTML="";
+
+ bills.filter(b=>(b.customer||"").toLowerCase().includes(q))
+ .forEach(b=>{
+  const row=document.createElement("div");
+  row.className="bill-row";
+
+  const info=document.createElement("div");
+  const title=document.createElement("strong");
+  title.textContent=b.customer||"Customer";
+  const detail=document.createElement("div");
+  detail.className="small";
+  detail.textContent=b.date+" · "+money(b.total);
+  info.append(title,detail);
+
+  const btn=document.createElement("button");
+  btn.className="secondary";
+  btn.textContent="View";
+  btn.onclick=()=>viewBill(b.id);
+
+  row.append(info,btn);
+  list.appendChild(row);
+ });
+
+ if(!list.children.length){
+  list.textContent="Abhi koi saved bill nahi hai.";
+ }
+}
+
+function viewBill(id){
+ let bills=[];
+ try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
+ catch(e){bills=[]}
+
+ const b=bills.find(x=>x.id===id);
+ if(!b)return;
+
+ document.getElementById("customer").value=b.customer||"";
+ document.getElementById("billDate").value=b.date;
+ document.getElementById("items").innerHTML="";
+ itemCount=0;
+ b.items.forEach(x=>addItem(x.name,x.qty,x.rate));
+ calculate();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+addItem();
+showBills();
+</script>
+
+</body>
+  </html
