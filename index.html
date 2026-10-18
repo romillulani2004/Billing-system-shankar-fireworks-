@@ -1,314 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#14532d">
-<title>Shankar Fireworks Billing</title>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f1e5">
+<title>SHANKAR FIREWORKS — Billing</title>
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f2f5f0;
- color:#222;
-}
-header{
- background:#14532d;
- color:white;
- text-align:center;
- padding:22px 10px;
- border-bottom:4px solid #d4af37;
-}
-header h1{margin:0;font-size:26px;letter-spacing:1px}
-header p{margin:7px 0 0;font-size:14px}
-.container{max-width:850px;margin:18px auto;padding:12px}
-.card{
- background:white;
- border:1px solid #e0e0e0;
- border-radius:12px;
- padding:16px;
- margin-bottom:16px;
- box-shadow:0 3px 10px #0000000a;
-}
-h2{font-size:19px;color:#14532d;margin-top:0}
-label{display:block;font-weight:bold;font-size:13px;margin:12px 0 6px}
-input{
- width:100%;padding:12px;border:1px solid #ccc;
- border-radius:7px;font-size:16px;background:white;
-}
-.row{
- display:grid;grid-template-columns:1fr 1fr;gap:10px;
-}
-button{
- border:0;border-radius:7px;padding:12px 14px;
- font-size:15px;font-weight:bold;cursor:pointer;
-}
-.primary{background:#14532d;color:white}
-.secondary{background:#e7eee8;color:#14532d}
-.danger{background:#fee2e2;color:#991b1b}
-button:active{opacity:.8}
-.item{
- border:1px solid #ddd;border-radius:9px;
- padding:12px;margin:12px 0;
- background:#fff;
-}
-.item-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.item-head input{font-weight:bold}
-.amount{text-align:right;font-weight:bold;color:#14532d;margin-top:10px}
-.total{
- background:#14532d;color:white;padding:18px;
- border-radius:9px;display:flex;justify-content:space-between;
- align-items:center;font-size:20px;font-weight:bold;
-}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.small{font-size:12px;color:#666;line-height:1.5}
-.bill-row{
- padding:12px;border-bottom:1px solid #ddd;
- display:flex;justify-content:space-between;gap:10px;align-items:center
-}
-footer{text-align:center;color:#666;font-size:12px;padding:20px}
-@media(max-width:420px){
- header h1{font-size:22px}
- .container{padding:8px}
- .card{padding:12px}
- .actions{grid-template-columns:1fr}
-}
-@media print{
- body{background:white}
- header{background:white!important;color:#14532d!important;border-bottom:2px solid #d4af37}
- .no-print,footer{display:none!important}
- .container{margin:0;padding:0}
- .card{box-shadow:none;border:0;padding:5px}
- input{border:0;padding:4px}
- .item{break-inside:avoid}
-}
-</style>
-</head>
-
-<body>
-
-<header>
- <h1>SHANKAR FIREWORKS</h1>
- <p>Fireworks &amp; Crackers</p>
- <p>Indore, Madhya Pradesh</p>
-</header>
-
-<div class="container">
-
- <div class="card">
-  <h2>🧾 Naya Cash Memo</h2>
-
-  <label>Customer Name</label>
-  <input id="customer" type="text" placeholder="Customer ka naam likhein">
-
-  <label>Bill Date</label>
-  <input id="billDate" type="date">
-
-  <h2 style="margin-top:24px">Items</h2>
-  <div id="items"></div>
-
-  <button class="secondary no-print" onclick="addItem()" style="width:100%">
-   + Add Item
-  </button>
-
-  <div class="total" style="margin-top:18px">
-   <span>GRAND TOTAL</span>
-   <span id="grandTotal">₹0.00</span>
-  </div>
-
-  <div class="actions no-print">
-   <button class="primary" onclick="saveBill()">Save Bill</button>
-   <button class="secondary" onclick="window.print()">Print / Save PDF</button>
-  </div>
-
-  <p class="small">
-   Thank you for shopping with Shankar Fireworks!
-  </p>
+:root{--bg:#fbf7ef;--paper:#fffdf8;--ink:#382719;--muted:#857463;--gold:#ad7b28;--line:#e7dac3;--pale:#f6eddd;--red:#9d3d2e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1050px;margin:auto;padding:14px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px;background:linear-gradient(135deg,#fffdf8,#f2e4c9);border:1px solid #dfc99e;border-radius:17px}
+.brand{display:flex;align-items:center;gap:13px}.logo{height:55px;width:55px;display:grid;place-items:center;border:1px solid #d9b56d;border-radius:50%;background:#fff9e9;font-size:30px}h1{font: bold 28px Georgia,serif;letter-spacing:1px;margin:0}.sub{color:var(--gold);letter-spacing:3px;font-size:11px;font-weight:bold;margin-top:4px}.tag{font:italic 13px Georgia,serif;color:#8a6a39;margin-top:5px}.date{font-size:12px;background:#fffaf0;border:1px solid var(--line);border-radius:10px;padding:10px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}button{border:1px solid var(--line);background:#fffaf0;color:var(--ink);padding:10px 13px;border-radius:9px;font-weight:700}button.primary,.active{background:var(--gold);color:white;border-color:var(--gold)}button.danger{background:#f8e8e2;color:var(--red);border-color:#efd0c5}
+.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.7fr);gap:15px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:0 4px 14px #51351b08}.card h2{font:22px Georgia,serif;margin:0 0 14px}.row{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{margin-bottom:12px}label{display:block;font-size:12px;font-weight:bold;color:#6c5946;margin-bottom:6px}input{width:100%;padding:11px;border:1px solid #ded1bb;border-radius:9px;background:#fffefa;color:var(--ink);min-width:0}input:focus{outline:2px solid #ad7b282b;border-color:var(--gold)}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.small{font-size:12px;padding:7px 10px}.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 16px}
+.product-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;background:#f6eddd;border:1px solid #dfc99e;color:#6d4a20;margin:0 0 12px}
+.product-toggle span{font-size:11px;font-weight:normal;color:#857463}
+.product-picker{border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:15px;background:#fffaf1}
+.product-filter{margin:0 0 8px}.product-btn{background:#fff9ee;border:1px solid #dfc99e;text-align:left;padding:12px 10px;min-height:62px}.product-btn span{display:block;font-size:11px;color:var(--muted);font-weight:normal;margin-top:5px}.muted{font-size:12px;color:var(--muted);line-height:1.5}.item-form{display:grid;grid-template-columns:minmax(0,1.3fr) .7fr .8fr auto;gap:8px;align-items:end}.table-wrap{overflow:auto;margin-top:12px}table{border-collapse:collapse;width:100%;min-width:430px;font-size:13px}th{background:var(--pale);color:#6d4a20;font-size:11px;text-align:left}th,td{padding:10px 8px;border-bottom:1px solid #eee4d3}td.num,th.num{text-align:right}.empty{text-align:center;color:#9b8c7a;padding:22px}.total{background:#f8f0df;border:1px solid #ead7b2;border-radius:11px;padding:13px;margin-top:14px}.totalrow{display:flex;justify-content:space-between;padding:5px 0}.grand{border-top:1px solid #ddc18a;margin-top:7px;padding-top:12px;font-size:21px;font-weight:bold;color:#704716}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.art{height:130px;border-radius:11px;margin-bottom:15px;position:relative;background:radial-gradient(circle at 23% 35%,#f8d57e 0 2px,transparent 3px),radial-gradient(circle at 23% 35%,transparent 0 22px,#d7a84c 23px 24px,transparent 25px),radial-gradient(circle at 78% 35%,#f8d57e 0 2px,transparent 3px),radial-gradient(circle at 78% 35%,transparent 0 30px,#b88731 31px 32px,transparent 33px),linear-gradient(135deg,#382719,#62431f);display:grid;place-items:center;color:#fff4d7;font:18px Georgia,serif}.stat{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.hidden{display:none!important}.history-item{border:1px solid var(--line);border-radius:11px;padding:13px;margin:10px 0}.billhead{display:none}footer{text-align:center;color:#9b8a74;font-size:11px;padding:20px}
+@media(max-width:720px){.wrap{padding:10px}header{padding:14px}.logo{width:45px;height:45px;font-size:24px}h1{font-size:23px}.tag{font-size:11px}.date{font-size:10px;padding:7px}.grid{grid-template-columns:1fr}.card{padding:13px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.item-form{grid-template-columns:1fr 1fr}.item-form .field:first-child{grid-column:1/-1}.item-form button{min-height:41px}}
+@media print{body{background:white}.wrap{padding:0;max-width:none}header,nav,.side,.no-print,footer,.product-section{display:none!important}.grid{display:block}.card{border:0;box-shadow:none;padding:0}.billhead{display:block;text-align:center;border-bottom:2px solid #9d752e;padding-bottom:12px;margin-bottom:12px}.billhead h2{font:26px Georgia,serif;margin:0}.billhead p{font-size:12px;margin:4px}.table-wrap{overflow:visible}table{min-width:0}th,td{border:1px solid #ddd}.hide-print{display:none!important}.total{background:white}.grand{color:black}}
+</style></head>
+<body><div class="wrap">
+<header><div class="brand"><div class="logo">✺</div><div><h1>SHANKAR</h1><div class="sub">F I R E W O R K S</div><div class="tag">Light Up Your Celebrations</div></div></div><div class="date">DATE<br><strong id="topDate"></strong></div></header>
+<nav class="no-print"><button class="active" data-tab="bill">＋ New Bill</button><button data-tab="products">⚙ Manage Products</button><button data-tab="history">▤ Bill History</button></nav>
+<section id="billView"><div class="grid"><main class="card">
+<div class="billhead"><h2>SHANKAR FIREWORKS</h2><p>Indore, Madhya Pradesh</p><p>Thank you for your purchase</p></div>
+<div class="title-row"><h2>New Bill</h2><button class="small no-print" id="clearForm">Clear</button></div>
+<div class="row"><div class="field"><label>Customer Name (optional)</label><input id="customer" placeholder="Customer name"></div><div class="field"><label>Bill Date</label><input id="date" type="date"></div></div>
+<div class="product-section no-print">
+ <button type="button" id="toggleProducts" class="product-toggle" aria-expanded="false">＋ Choose Product <span id="productCountLabel">Tap to open product list</span></button>
+ <div id="productPicker" class="product-picker hidden">
+  <div class="title-row"><h2 style="font-size:18px">Choose Product</h2><span class="muted">Tap a product</span></div>
+  <input id="productFilter" class="product-filter" placeholder="Search product..." aria-label="Search products">
+  <div id="productButtons" class="products"></div>
+  <p class="muted">Product list ko Manage Products se edit kar sakte hain.</p>
  </div>
-
- <div class="card no-print">
-  <h2>📋 Saved Bills</h2>
-  <input id="billSearch" placeholder="Customer name se bill search karein"
-         oninput="showBills()">
-  <div id="history"></div>
-  <p class="small">
-   Filhaal bills isi browser mein save honge. Online database connection
-   agle step mein jodenge.
-  </p>
- </div>
-
 </div>
-
-<footer>SHANKAR FIREWORKS · Indore</footer>
-
+<div class="item-form no-print"><div class="field"><label>Selected Item</label><input id="itemName" placeholder="Product button tap karein"></div><div class="field"><label>Quantity</label><input id="qty" type="number" min="1" step="1" placeholder="Qty"></div><div class="field"><label>Rate (₹)</label><input id="rate" type="number" min="0" step="0.01" placeholder="Rate"></div><button class="primary" id="add">Add</button></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Item</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th><th class="hide-print">×</th></tr></thead><tbody id="items"></tbody></table></div>
+<div class="total"><div class="totalrow"><span>Total Products</span><strong id="count">0</strong></div><div class="totalrow"><span>Total Quantity</span><strong id="qtySum">0</strong></div><div class="totalrow grand"><span>Grand Total</span><span id="total">₹0.00</span></div></div>
+<div class="actions no-print"><button class="primary" id="save">Save Bill</button><button id="print">Print / Save PDF</button><button id="new">New Bill</button></div>
+<p class="muted no-print">Important: Is version mein product list aur bills isi browser/device par save hote hain. Online sync aur customer QR link abhi connect nahi hain.</p>
+</main><aside class="card side"><div class="art">Celebrate Every Moment</div><h2>Shankar Fireworks</h2><p class="muted">Classic style. Simple billing.</p><div class="stat"><span>Today's Date</span><strong id="sideDate"></strong></div><div class="stat"><span>Saved Bills</span><strong id="savedCount">0</strong></div><div class="stat"><span>Today's Sales</span><strong id="sales">₹0.00</strong></div></aside></div></section>
+<section id="productsView" class="hidden"><div class="card"><h2>Manage Products</h2><p class="muted">Har product ka naam sirf ek baar save karein. Bill banate waqt product par click karein; quantity aur rate har bill mein aap bharenge.</p><div class="row"><div class="field"><label>Product Name</label><input id="newProduct" placeholder="e.g. Flower Pot"></div><div class="field" style="align-self:end"><button class="primary" id="saveProduct">Save Product</button></div></div><div id="manageList"></div><p class="muted">Product list is browser/device mein save hoti hai.</p></div></section>
+<section id="historyView" class="hidden"><div class="card"><div class="title-row"><h2>Bill History</h2><button class="small" id="back">＋ New Bill</button></div><div class="field"><label>Search customer or item</label><input id="search" placeholder="Naam ya item search karein"></div><div id="history"></div></div></section>
+<footer>SHANKAR FIREWORKS · Indore, Madhya Pradesh</footer></div>
 <script>
-let itemCount = 0;
-
-function today(){
- const d = new Date();
- return d.getFullYear() + "-" +
- String(d.getMonth()+1).padStart(2,"0") + "-" +
- String(d.getDate()).padStart(2,"0");
-}
-
-document.getElementById("billDate").value = today();
-
-function addItem(name="",qty="",rate=""){
- itemCount++;
- const id = itemCount;
- const div = document.createElement("div");
- div.className = "item";
- div.id = "item" + id;
-
- div.innerHTML = `
-  <div class="item-head">
-   <strong>Item ${id}</strong>
-   <button type="button" class="danger no-print"
-    onclick="removeItem(${id})">Remove</button>
-  </div>
-  <label>Item Name</label>
-  <input class="iname" placeholder="Cracker ka naam"
-   value="${escapeAttr(name)}" oninput="calculate()">
-  <div class="row">
-   <div>
-    <label>Quantity</label>
-    <input class="qty" type="number" min="0" step="any"
-     placeholder="0" value="${qty}" oninput="calculate()">
-   </div>
-   <div>
-    <label>Rate (₹)</label>
-    <input class="rate" type="number" min="0" step="any"
-     placeholder="0" value="${rate}" oninput="calculate()">
-   </div>
-  </div>
-  <div class="amount">Amount: <span class="lineTotal">₹0.00</span></div>
- `;
- document.getElementById("items").appendChild(div);
- calculate();
-}
-
-function escapeAttr(s){
- return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;")
-  .replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
-function removeItem(id){
- document.getElementById("item"+id)?.remove();
- calculate();
-}
-
-function money(n){
- return "₹" + Number(n).toLocaleString("en-IN",{
-  minimumFractionDigits:2,maximumFractionDigits:2
- });
-}
-
-function getItems(){
- return [...document.querySelectorAll(".item")].map(el=>{
-  const name=el.querySelector(".iname").value.trim();
-  const qty=Number(el.querySelector(".qty").value)||0;
-  const rate=Number(el.querySelector(".rate").value)||0;
-  return {name,qty,rate,amount:qty*rate};
- }).filter(x=>x.name && x.qty>0);
-}
-
-function calculate(){
- let total=0;
- document.querySelectorAll(".item").forEach(el=>{
-  const qty=Number(el.querySelector(".qty").value)||0;
-  const rate=Number(el.querySelector(".rate").value)||0;
-  const amount=qty*rate;
-  el.querySelector(".lineTotal").textContent=money(amount);
-  total+=amount;
- });
- document.getElementById("grandTotal").textContent=money(total);
-}
-
-function saveBill(){
- const customer=document.getElementById("customer").value.trim();
- const items=getItems();
-
- if(!items.length){
-  alert("Pehle kam se kam ek item aur quantity bharein.");
-  return;
- }
-
- const bill={
-  id:Date.now().toString(),
-  customer:customer,
-  date:document.getElementById("billDate").value||today(),
-  items:items,
-  total:items.reduce((s,x)=>s+x.amount,0)
- };
-
- let bills=[];
- try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
- catch(e){bills=[]}
-
- bills.unshift(bill);
- localStorage.setItem("shankarBills",JSON.stringify(bills));
- showBills();
- alert("Bill is browser mein save ho gaya!");
-}
-
-function showBills(){
- let bills=[];
- try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
- catch(e){bills=[]}
-
- const q=document.getElementById("billSearch").value.toLowerCase();
- const list=document.getElementById("history");
- list.innerHTML="";
-
- bills.filter(b=>(b.customer||"").toLowerCase().includes(q))
- .forEach(b=>{
-  const row=document.createElement("div");
-  row.className="bill-row";
-
-  const info=document.createElement("div");
-  const title=document.createElement("strong");
-  title.textContent=b.customer||"Customer";
-  const detail=document.createElement("div");
-  detail.className="small";
-  detail.textContent=b.date+" · "+money(b.total);
-  info.append(title,detail);
-
-  const btn=document.createElement("button");
-  btn.className="secondary";
-  btn.textContent="View";
-  btn.onclick=()=>viewBill(b.id);
-
-  row.append(info,btn);
-  list.appendChild(row);
- });
-
- if(!list.children.length){
-  list.textContent="Abhi koi saved bill nahi hai.";
- }
-}
-
-function viewBill(id){
- let bills=[];
- try{bills=JSON.parse(localStorage.getItem("shankarBills")||"[]")}
- catch(e){bills=[]}
-
- const b=bills.find(x=>x.id===id);
- if(!b)return;
-
- document.getElementById("customer").value=b.customer||"";
- document.getElementById("billDate").value=b.date;
- document.getElementById("items").innerHTML="";
- itemCount=0;
- b.items.forEach(x=>addItem(x.name,x.qty,x.rate));
- calculate();
- window.scrollTo({top:0,behavior:"smooth"});
-}
-
-addItem();
-showBills();
-</script>
-
-</body>
-  </html
+const $=id=>document.getElementById(id),PKEY='shankar_products_v2',BKEY='shankar_bills_v2';let items=[],editId=null;
+const today=()=>{let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const dateFmt=s=>s? s.split('-').reverse().join('/'):'';
+const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return []}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderProducts(){let ps=read(PKEY),q=($('productFilter')?.value||'').trim().toLowerCase();let shown=ps.filter(p=>p.toLowerCase().includes(q));$('productCountLabel').textContent=ps.length?`${ps.length} products · Tap to open`:'No products saved';$('productButtons').innerHTML=shown.length?shown.map(p=>`<button class="product-btn" data-pick="${esc(p)}">${esc(p)}<span>Tap to select ↗</span></button>`).join(''):'<div class="muted">Koi product nahi mila. Manage Products mein products add karein.</div>'; $('manageList').innerHTML=ps.length?ps.map(p=>`<div class="stat"><span>${esc(p)}</span><button class="danger small" data-delproduct="${esc(p)}">Delete</button></div>`).join(''):'<p class="muted">Abhi koi product save nahi hai.</p>'}
+function renderItems(){let b=$('items');b.innerHTML=items.length?items.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td class="num">${x.qty}</td><td class="num">${money(x.rate)}</td><td class="num">${money(x.qty*x.rate)}</td><td class="hide-print"><button class="danger small" data-remove="${i}">×</button></td></tr>`).join(''):'<tr><td colspan="6" class="empty">Product choose karke quantity aur rate bharein.</td></tr>';$('count').textContent=items.length;$('qtySum').textContent=items.reduce((s,x)=>s+x.qty,0);$('total').textContent=money(items.reduce((s,x)=>s+x.qty*x.rate,0))}
+function stats(){let b=read(BKEY);$('savedCount').textContent=b.length;$('sales').textContent=money(b.filter(x=>x.date===today()).reduce((s,x)=>s+x.total,0))}
+function addItem(){let name=$('itemName').value.trim(),qty=Number($('qty').value),rate=Number($('rate').value);if(!name)return alert('Pehle product choose karein.');if(!Number.isFinite(qty)||qty<=0)return alert('Sahi quantity likhein.');if($('rate').value===''||!Number.isFinite(rate)||rate<0)return alert('Sahi rate likhein.');items.push({name,qty,rate});$('itemName').value='';$('qty').value='';$('rate').value='';renderItems()}
+function reset(){items=[];editId=null;$('customer').value='';$('date').value=today();$('itemName').value='';$('qty').value='';$('rate').value='';renderItems()}
+function saveBill(){if(!items.length)return alert('Bill mein pehle item add karein.');let all=read(BKEY),b={id:editId||'bill'+Date.now(),customer:$('customer').value.trim(),date:$('date').value||today(),items:items.map(x=>({...x})),total:items.reduce((s,x)=>s+x.qty*x.rate,0)};let i=all.findIndex(x=>x.id===b.id);if(i>=0)all[i]=b;else all.unshift(b);write(BKEY,all);editId=b.id;stats();renderHistory();alert('Bill is browser mein save ho gaya.')}
+function show(t){['bill','products','history'].forEach(x=>$(x+'View').classList.toggle('hidden',x!==t));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));if(t==='products')renderProducts();if(t==='history')renderHistory()}
+function renderHistory(){let q=$('search').value.toLowerCase().trim(),bs=read(BKEY).filter(b=>(b.customer||'').toLowerCase().includes(q)||b.items.some(x=>x.name.toLowerCase().includes(q)));$('history').innerHTML=bs.length?bs.map(b=>`<div class="history-item"><strong>${esc(b.customer||'Walk-in Customer')}</strong><p class="muted">${dateFmt(b.date)} · ${b.items.length} item(s)</p><strong>${money(b.total)}</strong><div class="actions"><button class="primary small" data-open="${b.id}">Open</button><button class="small" data-bprint="${b.id}">Print</button><button class="danger small" data-bdel="${b.id}">Delete</button></div></div>`).join(''):'<p class="muted">Koi saved bill nahi mila.</p>'}
+function openBill(id){let b=read(BKEY).find(x=>x.id===id);if(!b)return;editId=b.id;$('customer').value=b.customer||'';$('date').value=b.date;items=b.items.map(x=>({...x}));renderItems();show('bill')}
+$('add').onclick=addItem;['qty','rate'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')addItem()}));$('items').onclick=e=>{let b=e.target.closest('[data-remove]');if(b){items.splice(+b.dataset.remove,1);renderItems()}};$('save').onclick=saveBill;$('print').onclick=()=>{if(!items.length)return alert('Pehle items add karein.');window.print()};$('new').onclick=reset;$('clearForm').onclick=reset;
+$('saveProduct').onclick=()=>{let p=$('newProduct').value.trim();if(!p)return alert('Product ka naam likhein.');let ps=read(PKEY);if(ps.some(x=>x.toLowerCase()===p.toLowerCase()))return alert('Ye product pehle se hai.');ps.push(p);write(PKEY,ps);$('newProduct').value='';renderProducts()};
+$('manageList').onclick=e=>{let b=e.target.closest('[data-delproduct]');if(b&&confirm('Product list se delete karein?')){write(PKEY,read(PKEY).filter(p=>p!==b.dataset.delproduct));renderProducts()}};
+$('toggleProducts').onclick=()=>{const picker=$('productPicker'),open=picker.classList.contains('hidden');picker.classList.toggle('hidden',!open);$('toggleProducts').setAttribute('aria-expanded',String(open));$('toggleProducts').firstChild.textContent=open?'− Choose Product ':'＋ Choose Product ';if(open){$('productFilter').value='';renderProducts();$('productFilter').focus()}};
+$('productFilter').addEventListener('input',renderProducts);
+$('productButtons').onclick=e=>{let b=e.target.closest('[data-pick]');if(b){$('itemName').value=b.dataset.pick;$('productPicker').classList.add('hidden');$('toggleProducts').setAttribute('aria-expanded','false');$('toggleProducts').firstChild.textContent='＋ Choose Product ';$('qty').focus()}};
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.tab));$('back').onclick=()=>show('bill');$('search').oninput=renderHistory;
+$('history').onclick=e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.open)openBill(b.dataset.open);if(b.dataset.bprint){openBill(b.dataset.bprint);setTimeout(()=>window.print(),100)}if(b.dataset.bdel&&confirm('Saved bill delete karein?')){write(BKEY,read(BKEY).filter(x=>x.id!==b.dataset.bdel));stats();renderHistory()}};
+$('topDate').textContent=dateFmt(today());$('sideDate').textContent=dateFmt(today());$('date').value=today();renderProducts();renderItems();stats();
+</script></body></html>
